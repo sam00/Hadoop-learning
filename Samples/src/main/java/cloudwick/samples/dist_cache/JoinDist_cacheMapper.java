@@ -1,4 +1,4 @@
-package CloudWick1.Samples.dist_cache;
+package cloudwick.samples.dist_cache;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

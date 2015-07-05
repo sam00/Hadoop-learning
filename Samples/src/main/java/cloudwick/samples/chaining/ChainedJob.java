@@ -1,4 +1,4 @@
-package CloudWick1.Samples.chaining;
+package cloudwick.samples.chaining;
 
 
 import java.io.IOException;
@@ -35,8 +35,8 @@ public class ChainedJob {
       InterruptedException, ClassNotFoundException {
 
     Path inputPath1 = new Path(args[0]);
-    Path inputPath2 = new Path(args[1]);
-    Path outputDir = new Path(args[2]);
+    // Path inputPath2 = new Path(args[1]);
+    Path outputDir = new Path(args[1]);
 
     // Create configuration
     Configuration conf = new Configuration(true);
@@ -78,7 +78,7 @@ public class ChainedJob {
     job.setInputFormatClass(TextInputFormat.class);
 
     // Input1
-    FileInputFormat.addInputPath(job1, inputPath2);
+    FileInputFormat.addInputPath(job1, inputPath1);
     job1.setInputFormatClass(TextInputFormat.class);
 
     // Output

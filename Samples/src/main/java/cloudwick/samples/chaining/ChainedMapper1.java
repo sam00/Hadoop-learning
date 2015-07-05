@@ -1,4 +1,4 @@
-package CloudWick1.Samples.chaining;
+package cloudwick.samples.chaining;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public class ChainedMapper1 extends Mapper<Object, Text, Text, Text> {
       String Artistname = splits[artistNameIndex];
       String Title = splits[titleIndex];
 
-      // title contains search word
+      // it title contains search word
       if (containsSearchword)
         context.write(new Text(Trackid), new Text(Artistname + "\t" + Title));
     }
