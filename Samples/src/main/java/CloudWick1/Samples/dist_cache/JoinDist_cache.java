@@ -2,6 +2,21 @@ package CloudWick1.Samples.dist_cache;
 
 import java.io.IOException;
 
+/*
+ * This exercise is about foo and bar. It works like this
+ * - Map mapper  to map1
+ * - Map track id and artistid
+ * - 
+ * 
+ * Input is this
+ *Unique_tracks and unique_artist 
+ * 
+ *
+ * Output is that
+ * Strings related to artist and trackid
+ * 
+ * */
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
