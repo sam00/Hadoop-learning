@@ -15,7 +15,7 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>jdk.tools</groupId>
 			<artifactId>jdk.tools</artifactId>
@@ -23,31 +23,62 @@
 			<scope>system</scope>
 			<systemPath>/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/lib/tools.jar</systemPath>
 		</dependency>
-		
 		<dependency>
+
 			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-hdfs</artifactId>
-			<version>2.0.0-cdh4.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-auth</artifactId>
-			<version>2.0.0-cdh4.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-common</artifactId>
-			<version>2.0.0-cdh4.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
+
 			<artifactId>hadoop-core</artifactId>
-			<version>2.0.0-mr1-cdh4.0.1</version>
+
+			<version>1.2.1</version>
+
 		</dependency>
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit-dep</artifactId>
-			<version>4.8.2</version>
+
+			<groupId>org.apache.hadoop</groupId>
+
+			<artifactId>hadoop-test</artifactId>
+
+			<version>1.2.1</version>
+
+			<scope>test</scope>
+
 		</dependency>
+
+		<dependency>
+
+			<groupId>org.apache.hadoop</groupId>
+
+			<artifactId>hadoop-test</artifactId>
+
+			<version>1.2.1</version>
+
+			<scope>test</scope>
+
+		</dependency>
+
+		<dependency>
+
+			<groupId>org.slf4j</groupId>
+
+			<artifactId>slf4j-api</artifactId>
+
+			<version>1.5.8</version>
+
+			<scope>compile</scope>
+
+		</dependency>
+
+		<dependency>
+
+			<groupId>org.slf4j</groupId>
+
+			<artifactId>slf4j-log4j12</artifactId>
+
+			<version>1.7.3</version>
+
+		</dependency>
+
+
 	</dependencies>
 </project>
