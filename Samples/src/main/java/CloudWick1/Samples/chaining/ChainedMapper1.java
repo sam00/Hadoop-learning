@@ -32,7 +32,7 @@ public class ChainedMapper1 extends Mapper<Object, Text, Text, Text> {
       String Artistname = splits[artistNameIndex];
       String Title = splits[titleIndex];
 
-      // it title contains search word
+      // title contains search word
       if (containsSearchword)
         context.write(new Text(Trackid), new Text(Artistname + "\t" + Title));
     }

@@ -49,6 +49,9 @@ public class JoinDist_cacheMapper extends Mapper<Object, Text, Text, Text> {
   }
 
   private final int StateIndex = 3;
+  private final int ArtistnameIndex = 2;
+  private final int TrackidIndex = 0;
+
   String seek = "night";
   String seperator = "<SEP>";
 
@@ -59,8 +62,8 @@ public class JoinDist_cacheMapper extends Mapper<Object, Text, Text, Text> {
 
     if (splits.length == StateIndex + 1) {
 
-      String Trackid = splits[StateIndex - 3];
-      String Artistname = splits[StateIndex - 1];
+      String Trackid = splits[TrackidIndex];
+      String Artistname = splits[ArtistnameIndex];
       String Title = splits[StateIndex];
 
       for (String e : Artists) {
