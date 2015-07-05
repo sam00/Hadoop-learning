@@ -1,11 +1,11 @@
-package cloudwick.samples.chaining;
+package CloudWick1.Samples.dist_cache;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class ChainedMapper2 extends Mapper<Object, Text, Text, Text> {
+public class JoinDist_cacheMap1 extends Mapper<Object, Text, Text, Text> {
 
   private final int StateIndex = 3;
   String seek = "night";
@@ -34,3 +34,4 @@ public class ChainedMapper2 extends Mapper<Object, Text, Text, Text> {
     }
   }
 }
+

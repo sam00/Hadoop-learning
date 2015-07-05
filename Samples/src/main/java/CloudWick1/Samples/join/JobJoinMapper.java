@@ -1,4 +1,4 @@
-package cloudwick.samples.join;
+package CloudWick1.Samples.join;
 
 import java.io.IOException;
 

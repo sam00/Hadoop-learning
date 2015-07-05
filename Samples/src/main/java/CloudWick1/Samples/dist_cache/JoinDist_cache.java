@@ -1,4 +1,4 @@
-package cloudwick.samples.dist_cache;
+package CloudWick1.Samples.dist_cache;
 
 import java.io.IOException;
 
