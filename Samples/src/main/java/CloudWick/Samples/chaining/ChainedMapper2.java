@@ -1,11 +1,11 @@
-package CloudWick.Samples;
+package cloudwick.samples.chaining;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Map1 extends Mapper<Object, Text, Text, Text> {
+public class ChainedMapper2 extends Mapper<Object, Text, Text, Text> {
 
   private final int StateIndex = 3;
   String seek = "night";

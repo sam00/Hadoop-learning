@@ -1,0 +1,60 @@
+Important commands for Hadoop:
+
+
+ssh root@127.0.0.1 -p 2222
+
+
+
+Transfer file from local to to the root file to the VM temp/data folder:
+
+
+scp -P 2222 /Users/Sam/Desktop/AdventureWorks\ 2012\ OLTP\ Script/* root@127.0.0.1:/tmp/data
+
+
+copy from local to HDFS:
+
+
+hadoop fs -copyFromLocal /tmp/data* /user/hadoop/input
+
+
+list all
+
+hadoop fs -ls /user/hadoop/input
+
+
+Create:
+
+hadoop dfs -mkdir -p /user/hadoop/input
+
+
+
+way to run the program:
+
+
+
+hadoop jar /tmp/Samples-0.0.1-SNAPSHOT.jar CloudWick.Samples.WordCount hdfs:/user/hadoop/input/data/StateProvince.csv hdfs:/user/hadoop/output
+
+
+hadoop jar /tmp/Samples-0.0.1-SNAPSHOT.jar CloudWick.Samples.WordCount hdfs:/input/StateProvince.csv hdfs:/output
+
+
+hadoop jar /tmp/data/Samples-0.0.1-SNAPSHOT.jar CloudWick.Samples.WordCount /user/hadoop/input/data/unique_tracks.txt /user/hadoop/input/unique_artists.txt /user/hadoop/output/aap1
+
+
+list all:
+
+
+hadoop fs -ls /input
+
+
+
+copy file:
+
+
+hadoop fs -copyFromLocal /tmp/data* hdfs:/input
+
+
+Looking the input file:
+
+hadoop fs -cat /input/StateProvince.csv
+
