@@ -6,26 +6,22 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class UniqueCountMapper extends Mapper<Object, Text, Text, IntWritable> {
-  
+public class UniqueCountMapper1 extends Mapper<Object, Text, Text, IntWritable> {
+
   private final IntWritable ONE = new IntWritable(1);
   private Text word = new Text();
 
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
 
-    String[] csv = value.toString().split("\t");
-    if (csv.length == 2) {
+    String[] csv = value.toString().split("::");
 
-      String userid = csv[0];
-      String Url = csv[1];
+    if (csv.length > 0) {
 
-      String pair = Url + "::" + userid;
-
-      word.set(pair);
+      word.set(csv[0]);
       context.write(word, ONE);
+
     }
   }
-
 }
 
