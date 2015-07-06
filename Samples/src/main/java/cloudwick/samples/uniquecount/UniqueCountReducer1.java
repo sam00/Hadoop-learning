@@ -12,11 +12,11 @@ public class UniqueCountReducer1 extends
   public void reduce(Text text, Iterable<IntWritable> values, Context context)
       throws IOException, InterruptedException {
 
-    int sum = 0;
+    int add = 0;
     for (IntWritable value : values) {
-      sum += value.get();
+      add += value.get();
     }
-    context.write(text, new IntWritable(sum));
+    context.write(text, new IntWritable(add));
   }
 }
 
