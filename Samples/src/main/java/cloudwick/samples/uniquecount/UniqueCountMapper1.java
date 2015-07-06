@@ -8,8 +8,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class UniqueCountMapper1 extends Mapper<Object, Text, Text, IntWritable> {
 
-  private final IntWritable ONE = new IntWritable(1);
-  private Text word = new Text();
+  private final IntWritable alpha = new IntWritable(1);
+  private Text gamma = new Text();
 
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
@@ -18,8 +18,8 @@ public class UniqueCountMapper1 extends Mapper<Object, Text, Text, IntWritable> 
 
     if (csv.length > 0) {
 
-      word.set(csv[0]);
-      context.write(word, ONE);
+      gamma.set(csv[0]);
+      context.write(gamma, alpha);
 
     }
   }

@@ -8,8 +8,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class UniqueCountMapper extends Mapper<Object, Text, Text, IntWritable> {
   
-  private final IntWritable ONE = new IntWritable(1);
-  private Text word = new Text();
+  private final IntWritable alpha = new IntWritable(1);
+  private Text gamma = new Text();
 
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
@@ -22,8 +22,8 @@ public class UniqueCountMapper extends Mapper<Object, Text, Text, IntWritable> {
 
       String pair = Url + "::" + userid;
 
-      word.set(pair);
-      context.write(word, ONE);
+      gamma.set(pair);
+      context.write(gamma, alpha);
     }
   }
 
