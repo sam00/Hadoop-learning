@@ -14,7 +14,7 @@ public class UniqueCountMapper1 extends Mapper<Object, Text, Text, IntWritable> 
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
 
-    String[] file = value.toString().split("::");
+    String[] file = value.toString().split(">>");
 
     if (file.length > 0) {
 
