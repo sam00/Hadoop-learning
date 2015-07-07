@@ -14,11 +14,11 @@ public class UniqueCountMapper1 extends Mapper<Object, Text, Text, IntWritable> 
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
 
-    String[] csv = value.toString().split("::");
+    String[] file = value.toString().split("::");
 
-    if (csv.length > 0) {
+    if (file.length > 0) {
 
-      gamma.set(csv[0]);
+      gamma.set(file[0]);
       context.write(gamma, alpha);
 
     }

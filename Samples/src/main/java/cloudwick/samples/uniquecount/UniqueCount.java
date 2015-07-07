@@ -68,7 +68,7 @@ public class UniqueCount {
       hdfs.delete(outputDir, true);
 
     // Execute job
-    // int code = job.waitForCompletion(true) ? 0 : 1;
+    int code = job.waitForCompletion(true) ? 0 : 1;
     int code1 = job1.waitForCompletion(true) ? 0 : 1;
     System.exit(code1);
 

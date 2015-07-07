@@ -14,13 +14,13 @@ public class UniqueCountMapper extends Mapper<Object, Text, Text, IntWritable> {
   public void map(Object key, Text value, Context context) throws IOException,
       InterruptedException {
 
-    String[] csv = value.toString().split("\t");
-    if (csv.length == 2) {
+    String[] file = value.toString().split("\t");
+    if (file.length == 2) {
 
-      String userid = csv[0];
-      String Url = csv[1];
+      String userid = file[0];
+      String Url = file[1];
 
-      String pair = Url + "::" + userid;
+      String pair = Url + ">>" + userid;
 
       gamma.set(pair);
       context.write(gamma, alpha);
