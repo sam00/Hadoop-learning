@@ -51,11 +51,9 @@ public class ChainedJob {
 
     // Create job1
 
-    Job job1 = new Job(conf2, "Map1");
+    Job job1 = new Job(conf2, "ChainedJob");
     job1.setJarByClass(ChainedJob.class);
 
-    // DistributedCache.addCacheFile(inputPath1.toUri(),
-    // job.getConfiguration());
 
     // Setup MapReduce
     job.setMapperClass(ChainedMapper1.class);
