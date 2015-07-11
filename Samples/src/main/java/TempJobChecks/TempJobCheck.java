@@ -1,5 +1,4 @@
-package cloudwick.samples.temperature;
-
+package TempJobChecks;
 
 /*
  * This exercise is about finding Max Temperature . It works like this
@@ -16,7 +15,6 @@ package cloudwick.samples.temperature;
  *  We are also checking if we can trust data by looking at quality value
  * */
 
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -28,7 +26,11 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class TempJob {
+import cloudwick.samples.temperature.TempJob;
+import cloudwick.samples.temperature.TempMapper;
+import cloudwick.samples.temperature.TempReducer;
+
+public class TempJobCheck {
 
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {

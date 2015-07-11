@@ -1,4 +1,4 @@
-package cloudwick.samples.temperature;
+package TempJobChecks;
 
 import java.io.IOException;
 
@@ -7,11 +7,10 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class TempMapper extends
-    Mapper<LongWritable, Text, Text, IntWritable> {
+
+public class TempMap extends Mapper<LongWritable, Text, Text, IntWritable> {
 
   private static final int MaxTemp = 9999;
-
 
   public void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
@@ -34,4 +33,5 @@ public class TempMapper extends
     }
 
   }
+
 }
