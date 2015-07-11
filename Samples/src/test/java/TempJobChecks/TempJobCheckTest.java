@@ -1,6 +1,8 @@
 package TempJobChecks;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
@@ -26,32 +28,61 @@ public class TempJobCheckTest {
   }
 
   @Test
-  public void testMapper() throws IOException {
+  public void testMapper_ValidLine_ValidMap() throws IOException {
     mapDriver.withInput(new LongWritable(), new Text(
         "  1853   1    8.4     2.7       4    62.8     ---"));
     mapDriver.withOutput(new Text("1853"), new DoubleWritable(8.4));
     mapDriver.runTest();
   }
 
-  // @Test
-  // public void testReducer() {
-  // List<IntWritable> values = new ArrayList<IntWritable>();
-  // values.add(new IntWritable(1));
-  // values.add(new IntWritable(1));
-  // reduceDriver.withInput(new Text("6"), values);
-  // reduceDriver.withOutput(new Text("6"), new DoubleWritable(2));
-  // reduceDriver.runTest();
-  // }
-  //
-  // @Test
-  // public void testMapReduce() {
-  // mapReduceDriver.withInput(new LongWritable(), new Text(
-  // "655209;1;796764372490213;804422938115889;6"));
-  // List<IntWritable> values = new ArrayList<IntWritable>();
-  // values.add(new IntWritable(1));
-  // values.add(new IntWritable(1));
-  // mapReduceDriver.withOutput(new Text("6"), new DoubleWritable(2));
-  // mapReduceDriver.runTest();
+  @Test
+  public void testMapper_LineWithSpaces_ValidMap() throws IOException {
+    mapDriver.withInput(new LongWritable(), new Text(
+        "    1853   1    8.4     2.7       4    62.8     ---    "));
+    mapDriver.withOutput(new Text("1853"), new DoubleWritable(8.4));
+    mapDriver.runTest();
+  }
+
+  @Test
+  public void testMapper_LineWithStar_Null() throws IOException {
+    mapDriver.withInput(new LongWritable(), new Text(
+        "    1853   1    8.4*     2.7       4    62.8     ---    "));
+    mapDriver.runTest();
+  }
+
+  @Test
+  public void testMapper_InvalidLine_Null() throws IOException {
+    mapDriver.withInput(new LongWritable(), new Text(
+        "Nothing interesting in here!!!"));
+    mapDriver.runTest();
+  }
+
+  @Test
+  public void testReducer_ValidMaps_ValidResult() throws IOException {
+
+    List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+    double expected = 200.05;
+
+    values.add(new DoubleWritable(8.4));
+    values.add(new DoubleWritable(1.6));
+    values.add(new DoubleWritable(100));
+    values.add(new DoubleWritable(expected));
+
+    reduceDriver.withInput(new Text("2000"), values);
+    reduceDriver.withOutput(new Text("2000"), new DoubleWritable(expected));
+
+    reduceDriver.runTest();
+  }
+
+  @Test
+  public void testMapReduce() throws IOException {
+    mapReduceDriver.withInput(new LongWritable(), new Text(
+        "  1853   1    8.4     2.7       4    62.8     ---"));
+    List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+    values.add(new DoubleWritable(1));
+    values.add(new DoubleWritable(1));
+    mapReduceDriver.withOutput(new Text("1853"), new DoubleWritable(8.4));
+    mapReduceDriver.runTest();
+  }
+
 }
-
-
