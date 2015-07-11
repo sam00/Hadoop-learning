@@ -22,8 +22,10 @@ public class TempMap extends Mapper<LongWritable, Text, Text, DoubleWritable> {
     if (line == null || line.isEmpty()) {
       return;
     }
-    String[] recordSplits = line.split(" ");
+
+    String[] recordSplits = line.trim().split(" +");
     if (recordSplits.length == expectLength) {
+
 
       String year = recordSplits[yearIndex];
 
