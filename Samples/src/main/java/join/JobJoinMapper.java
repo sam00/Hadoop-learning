@@ -1,4 +1,4 @@
-package cloudwick.join;
+package join;
 
 import java.io.IOException;
 

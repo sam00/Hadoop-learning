@@ -1,4 +1,4 @@
-package cloudwick.temperature;
+package temperature;
 
 import java.io.IOException;
 

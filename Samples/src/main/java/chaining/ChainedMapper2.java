@@ -1,14 +1,13 @@
-package cloudwick.join;
+package chaining;
 
 import java.io.IOException;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class JobJoinMap1 extends Mapper<Object, Text, Text, Text> {
+public class ChainedMapper2 extends Mapper<Object, Text, Text, Text> {
 
   private final int StateIndex = 3;
-
   private final int TrackidIndex = 2;
 
   String seek = "night";
@@ -24,6 +23,8 @@ public class JobJoinMap1 extends Mapper<Object, Text, Text, Text> {
       Boolean containsSearchword =
           splits[StateIndex].toLowerCase().contains(seek);
 
+      // String Artid1 = splits[StateIndex - 3];
+      // String Artid2 = splits[StateIndex - 2];
       String Trackid = splits[TrackidIndex];
       String Artistname = splits[StateIndex];
 
