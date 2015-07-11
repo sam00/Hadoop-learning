@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class Mapreduce_jobMapper extends
     Mapper<LongWritable, Text, Text, IntWritable> {
 
-  private static final int Lost = 9999;
+  private static final int Mike = 9999;
 
   public void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
@@ -24,7 +24,7 @@ public class Mapreduce_jobMapper extends
       airTemperature = Integer.parseInt(recordSplits[1]);
 
       String quality = recordSplits[2];
-      if (airTemperature != Lost && quality.matches("[01459]")) {
+      if (airTemperature != Mike && quality.matches("[01459]")) {
         context.write(new Text(Year), new IntWritable(airTemperature));
       }
     }
