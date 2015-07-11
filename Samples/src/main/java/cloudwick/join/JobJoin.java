@@ -1,4 +1,4 @@
-package cloudwick.samples.dist_cache;
+package cloudwick.join;
 
 import java.io.IOException;
 
@@ -27,8 +27,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class JoinDist_cache {
-
+public class JobJoin {
   public static void main(String[] args) throws IOException,
       InterruptedException, ClassNotFoundException {
 
@@ -40,22 +39,23 @@ public class JoinDist_cache {
     Configuration conf = new Configuration(true);
 
     // Create job
-    Job job = new Job(conf, "JoinDist_cache");
-    job.setJarByClass(JoinDist_cache.class);
+    Job job = new Job(conf, "JobJoin");
+    job.setJarByClass(JobJoinMapper.class);
 
     // Setup MapReduce
-    // job.setReducerClass(JoinDist_cacheReducer.class);
-    // job.setNumReduceTasks(1);
+//    job.setMapperClass(JobJoinMapper.class);
+//    job.setReducerClass(JobJoinReducer.class);
+    job.setNumReduceTasks(1);
 
     // Specify key / value
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(Text.class);
 
     // Input
-    MultipleInputs.addInputPath(job, inputPath1, TextInputFormat.class,
-        JoinDist_cacheMapper.class);
+
+    MultipleInputs.addInputPath(job, inputPath1, TextInputFormat.class, JobJoinMapper.class);
     MultipleInputs.addInputPath(job, inputPath2, TextInputFormat.class,
-        JoinDist_cacheMap1.class);
+        JobJoinMap1.class);
 
     // FileInputFormat.addInputPath(job, inputPath);
     // job.setInputFormatClass(TextInputFormat.class);
@@ -76,4 +76,3 @@ public class JoinDist_cache {
   }
 
 }
-

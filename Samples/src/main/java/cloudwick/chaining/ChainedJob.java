@@ -1,4 +1,4 @@
-package cloudwick.samples.chaining;
+package cloudwick.chaining;
 
 
 import java.io.IOException;

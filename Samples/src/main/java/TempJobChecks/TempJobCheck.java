@@ -26,7 +26,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-import cloudwick.samples.temperature.TempJob;
+import cloudwick.temperature.TempJob;
 
 
 public class TempJobCheck {

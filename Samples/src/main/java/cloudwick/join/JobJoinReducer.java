@@ -1,4 +1,4 @@
-package cloudwick.samples.join;
+package cloudwick.join;
 
 import java.io.IOException;
 import java.util.Iterator;

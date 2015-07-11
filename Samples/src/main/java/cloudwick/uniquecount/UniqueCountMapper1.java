@@ -1,4 +1,4 @@
-package cloudwick.samples.uniquecount;
+package cloudwick.uniquecount;
 
 import java.io.IOException;
 
