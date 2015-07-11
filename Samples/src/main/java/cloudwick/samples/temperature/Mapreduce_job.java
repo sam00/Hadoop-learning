@@ -1,6 +1,21 @@
 package cloudwick.samples.temperature;
 
 
+/*
+ * This exercise is about Temperature . It works like this
+ * - Mapreduce_jobMapper
+ * - Mapreduce_jobReduce
+ * 
+ * 
+ * Input is this
+ * Data input
+ *
+ * 
+ * Output is that
+ * 
+ * Temperature, year and quality
+ * 
+ * */
 
 
 import org.apache.hadoop.conf.Configuration;
