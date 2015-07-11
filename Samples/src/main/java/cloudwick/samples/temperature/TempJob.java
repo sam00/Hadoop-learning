@@ -2,19 +2,17 @@ package cloudwick.samples.temperature;
 
 
 /*
- * This exercise is about Temperature . It works like this
- * - Mapreduce_jobMapper
- * - Mapreduce_jobReduce
+ * This exercise is about finding Max Temperature . It works like this
+ * Mapper maps a line like this  [year] => [temp]. E.g.
+ * 2000 => 32
+ * 2000 => 31
+ * 2001 => 29
  * 
+ * Reducer reduces to [year]= max temperature. E.g.
+ * 2000 => max (32, 31)
+ * 2001 => max(29);
  * 
- * Input is this
- * Data input
- *
- * 
- * Output is that
- * 
- * Temperature, year and quality
- * 
+ *  We are also checking if we can trust data by looking at quality value
  * */
 
 
@@ -29,13 +27,12 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
-public class Mapreduce_job {
+public class TempJob {
 
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.err.println("Usage : MaxTemperature<input path> <output path>");
       System.exit(-1);
-
     }
 
     Path inputPath = new Path(args[0]);
@@ -45,12 +42,12 @@ public class Mapreduce_job {
     Configuration conf = new Configuration(true);
 
     // Create job
-    Job job = new Job(conf, "Mapreduce_job");
-    job.setJarByClass(Mapreduce_job.class);
+    Job job = new Job(conf, "TempJob");
+    job.setJarByClass(TempJob.class);
 
     // Setup MapReduce
-    job.setMapperClass(Mapreduce_jobMapper.class);
-    job.setReducerClass(Mapreduce_jobReducer.class);
+    job.setMapperClass(TempMapper.class);
+    job.setReducerClass(TempReducer.class);
     job.setNumReduceTasks(1);
 
     // Specify key / value
