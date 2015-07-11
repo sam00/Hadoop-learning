@@ -2,36 +2,39 @@ package TempJobChecks;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
+public class TempMap extends Mapper<LongWritable, Text, Text, DoubleWritable> {
 
-public class TempMap extends Mapper<LongWritable, Text, Text, IntWritable> {
-
-  private static final int MaxTemp = 9999;
+  int yearIndex = 0;
+  int expectLength = 7;
+  int tempIndex = 2;
 
   public void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
+    
+    // checks here
+    String line = value.toString();
 
-    // checks here:
+    if (line == null || line.isEmpty()) {
+      return;
+    }
+    String[] recordSplits = line.split(" ");
+    if (recordSplits.length == expectLength) {
 
-    String Line = value.toString();
+      String year = recordSplits[yearIndex];
 
-    String[] recordSplits = Line.split("\t");
-    String Year = recordSplits[0];
-
-    int airTemperature;
-    if (recordSplits.length == 3) {
-      airTemperature = Integer.parseInt(recordSplits[1]);
-
-      String quality = recordSplits[2];
-      if (airTemperature >= MaxTemp && quality.matches("[01459]")) {
-        context.write(new Text(Year), new IntWritable(airTemperature));
+      try{
+        double temp = Double.parseDouble(recordSplits[tempIndex]);
+        context.write(new Text(year), new DoubleWritable(temp));
+      }
+      catch(NumberFormatException ex)
+      {
+        // this is not a number, just ignore this record
       }
     }
-
   }
-
 }

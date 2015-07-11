@@ -2,21 +2,22 @@ package TempJobChecks;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 
-public class TempReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class TempReduce extends
+    Reducer<Text, DoubleWritable, Text, DoubleWritable> {
 
-  public void reduce(Text key, Iterable<IntWritable> values, Context context)
+  public void reduce(Text key, Iterable<DoubleWritable> values, Context context)
       throws IOException, InterruptedException {
 
-    int maxValue = Integer.MIN_VALUE;
-    for (IntWritable value : values) {
+    double maxValue = Double.MIN_VALUE;
+    for (DoubleWritable value : values) {
       maxValue = Math.max(maxValue, value.get());
 
 }
-    context.write(key, new IntWritable(maxValue));
+    context.write(key, new DoubleWritable(maxValue));
   }
 }

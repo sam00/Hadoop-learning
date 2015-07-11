@@ -27,8 +27,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import cloudwick.samples.temperature.TempJob;
-import cloudwick.samples.temperature.TempMapper;
-import cloudwick.samples.temperature.TempReducer;
+
 
 public class TempJobCheck {
 
@@ -45,12 +44,12 @@ public class TempJobCheck {
     Configuration conf = new Configuration(true);
 
     // Create job
-    Job job = new Job(conf, "TempJob");
+    Job job = new Job(conf, "TempJobCheck");
     job.setJarByClass(TempJob.class);
 
     // Setup MapReduce
-    job.setMapperClass(TempMapper.class);
-    job.setReducerClass(TempReducer.class);
+    job.setMapperClass(TempMap.class);
+    job.setReducerClass(TempReduce.class);
     // job.setNumReduceTasks(1);
 
     // Specify key / value
