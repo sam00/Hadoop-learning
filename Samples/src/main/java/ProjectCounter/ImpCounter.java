@@ -87,7 +87,6 @@ public class ImpCounter {
 
     // Counter finding and displaying
     Counters counters = job.getCounters();
-
     System.out.printf("Missing Fields: %d, Error Count: %d\n", counters
         .findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).getValue(),
         counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue());

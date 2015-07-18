@@ -29,7 +29,7 @@ public class ImpCounterMap extends Mapper<Object, Text, Text, DoubleWritable> {
         "Adjusted net national income per capita (current US$)")) {
       String[] recordSplits = line.toString().split(seperator);
 
-      logger.info("The data has been splitted.");
+      logger.info("splitted.");
 
       if (recordSplits.length == lenIndex) {
 
