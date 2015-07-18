@@ -1,13 +1,15 @@
 package ProjectCounter;
 
+
 import java.io.IOException;
 
-import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.log4j.Logger;
 
-public class ImpCounterMap extends Mapper<Object, Text, Text, DoubleWritable> {
+public class ImpCounterMap extends
+    Mapper<Object, Text, Compositekeywrite, NullWritable> {
 
   private Logger logger = Logger.getLogger("FilterMapper");
 
@@ -38,7 +40,12 @@ public class ImpCounterMap extends Mapper<Object, Text, Text, DoubleWritable> {
 
           double income = Double.parseDouble(recordSplits[incomeIndex]);
 
-          context.write(new Text(countryName), new DoubleWritable(income));
+          // Setting the values for composite Key Writable
+          Compositekeywrite k = new Compositekeywrite();
+          k.setCountryname(countryName);
+          k.setIncome(income);
+
+          context.write(k, NullWritable.get());
 
         } catch (NumberFormatException nfe) {
 
