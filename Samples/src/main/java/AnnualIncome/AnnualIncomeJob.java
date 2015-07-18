@@ -24,19 +24,25 @@ public class AnnualIncomeJob {
   public static void main(String[] args) throws IOException,
       InterruptedException, ClassNotFoundException {
 
-    // Path inputPath = new Path(args[0]);
+    Path inputPath = new Path(args[0]);
     Path outputDir = new Path(args[1]);
-
-    String uri = args[3];
 
     // Create configuration
     Configuration conf = new Configuration(true);
+
+    // Create job
+    Job job = new Job(conf, "AnnualIncomeJob");
+    job.setJarByClass(AnnualIncomeJob.class);
+
+    // Decompression gz file
+
+    String uri = args[0];
     FileSystem fs = FileSystem.get(URI.create(uri), conf);
 
-    Path inputPath1 = new Path(uri);
+    // Path inputPath1 = new Path(uri);
     CompressionCodecFactory factory = new CompressionCodecFactory(conf);
 
-    CompressionCodec codec = factory.getCodec(inputPath1);
+    CompressionCodec codec = factory.getCodec(inputPath);
     if (codec == null) {
 
       System.err.println("No codec found for" + uri);
@@ -47,7 +53,7 @@ public class AnnualIncomeJob {
     InputStream in = null;
     OutputStream out = null;
     try {
-      in = codec.createInputStream(fs.open(inputPath1));
+      in = codec.createInputStream(fs.open(inputPath));
       out = fs.create(new Path(outputUri));
       IOUtils.copyBytes(in, out, conf);
     } finally {
@@ -56,9 +62,6 @@ public class AnnualIncomeJob {
 
     }
 
-    // Create job
-    Job job = new Job(conf, "AnnualIncomeJob");
-    job.setJarByClass(AnnualIncomeJob.class);
 
     // Setup MapReduce
     job.setMapperClass(AnnualIncomeMap.class);

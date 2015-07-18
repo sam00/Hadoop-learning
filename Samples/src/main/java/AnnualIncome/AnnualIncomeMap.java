@@ -16,14 +16,13 @@ public class AnnualIncomeMap extends Mapper<Object, Text, Text, DoubleWritable> 
   private final int incomeIndex = 54;
   private final int countryIndex = 0;
 
-
   String seek = "Adjusted net national income per capita (current US$)";
   String seperator = ",";
 
   public void map(Object key, Text line, Context context) throws IOException,
       InterruptedException {
 
-    if (line == null) {
+    if (line == null | !!line.toString().isEmpty()) {
       logger.info("null found");
       return;
     }
@@ -31,16 +30,17 @@ public class AnnualIncomeMap extends Mapper<Object, Text, Text, DoubleWritable> 
         " Adjusted net national income per capita (current US$) ")) {
       String[] Split = line.toString().split(seperator);
 
-      logger.info("splitted.");
+      logger.info(" data splitted ");
 
       if (Split.length == lengthIndex) {
 
         String countryName = Split[countryIndex];
         try {
           double income = Double.parseDouble(Split[incomeIndex]);
+
           context.write(new Text(countryName), new DoubleWritable(income));
         } catch (NumberFormatException nfe) {
-          logger.info("wrong format");
+          logger.info("wrong format" + countryName);
 
           return;
         }
