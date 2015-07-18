@@ -17,7 +17,7 @@ public class AnnualIncomeMap extends Mapper<Object, Text, Text, DoubleWritable> 
   private final int countryIndex = 0;
 
 
-  String seek = "Adjusted net national income (current US$)";
+  String seek = "Adjusted net national income per capita (current US$)";
   String seperator = ",";
 
   public void map(Object key, Text line, Context context) throws IOException,
@@ -27,7 +27,8 @@ public class AnnualIncomeMap extends Mapper<Object, Text, Text, DoubleWritable> 
       logger.info("null found");
       return;
     }
-    if (line.toString().contains(" income per capita ")) {
+    if (line.toString().contains(
+        " Adjusted net national income per capita (current US$) ")) {
       String[] Split = line.toString().split(seperator);
 
       logger.info("splitted.");
