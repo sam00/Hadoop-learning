@@ -75,7 +75,7 @@ public class ImpCounter {
     job.setOutputValueClass(DoubleWritable.class);
 
     // Input
-    // FileInputFormat.addInputPath(job, inputPath);
+
     FileInputFormat.addInputPaths(job, outputUri);
     job.setInputFormatClass(TextInputFormat.class);
 

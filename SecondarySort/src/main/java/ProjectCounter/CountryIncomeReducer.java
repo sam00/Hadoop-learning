@@ -6,7 +6,8 @@ import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
 
-public class CountryIncomeReducer extends
+public class CountryIncomeReducer
+    extends
     Reducer<Compositekeywrite, NullWritable, Compositekeywrite, NullWritable> {
 
   private Logger logger = Logger.getLogger("FilterMapper");
@@ -29,5 +30,5 @@ public class CountryIncomeReducer extends
 
 }
 
-  }
+}
 }

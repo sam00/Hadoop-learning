@@ -10,7 +10,7 @@ public class BasicCompKeySort extends WritableComparator {
     super(Compositekeywrite.class, true);
   }
 
-  // private Logger logger = Logger.getLogger("FilterMapper");
+  private Logger logger = Logger.getLogger("FilterMapper");
 
   @Override
   public int compare(WritableComparable w1, WritableComparable w2) {
