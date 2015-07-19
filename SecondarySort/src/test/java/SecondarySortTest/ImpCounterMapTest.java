@@ -46,7 +46,7 @@ public class ImpCounterMapTest {
     Compositekeywrite k =
         new Compositekeywrite("Afghanistan", 500.880766813369);
 
-    // mapDriver.withOutputFromString("sf  123");
+
     mapDriver.withOutput(k, NullWritable.get());
 
     // Act and Assert
