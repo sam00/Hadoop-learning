@@ -4,8 +4,8 @@ import org.apache.hadoop.io.WritableComparable;
 import org.apache.hadoop.io.WritableComparator;
 import org.apache.log4j.Logger;
 
-public class BasicGrouping extends WritableComparator {
-  protected BasicGrouping() {
+public class IncomeSortingComparator extends WritableComparator {
+  protected IncomeSortingComparator() {
     super(Compositekeywrite.class, true);
   }
 

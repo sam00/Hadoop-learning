@@ -64,7 +64,7 @@ public class ImpCounter {
     job.setMapperClass(ImpCounterMap.class);
     job.setPartitionerClass(BasicPartitioner.class);
 
-    job.setGroupingComparatorClass(BasicGrouping.class);
+    job.setGroupingComparatorClass(IncomeSortingComparator.class);
     job.setSortComparatorClass(BasicCompKeySort.class);
     job.setReducerClass(CountryIncomeReducer.class);
     job.setNumReduceTasks(1);
