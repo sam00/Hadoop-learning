@@ -28,6 +28,20 @@ public class Compositekeywrite implements WritableComparable {
         .toString();
   }
 
+  @Override
+  public boolean equals(Object other) {
+    Compositekeywrite o = (Compositekeywrite) other;
+    if (o == null)
+      return false;
+
+    if (o.countryName.equals(this.countryName)) {
+      if (o.income.equals(this.income)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void readFields(DataInput dataInput) throws IOException {
     countryName = WritableUtils.readString(dataInput);
     income = dataInput.readDouble();

@@ -29,13 +29,13 @@ public class ImpCounterMap extends
     }
     if (line.toString().contains(
         "Adjusted net national income per capita (current US$)")) {
-      String[] recordSplits = line.toString().split(seperator);
+      String[] recordSplits = line.toString().trim().split(seperator);
 
       logger.info("splitted.");
 
       if (recordSplits.length == lenIndex) {
 
-        String countryName = recordSplits[countryIndex];
+        String countryName = recordSplits[countryIndex].trim();
         try {
 
           double income = Double.parseDouble(recordSplits[incomeIndex]);

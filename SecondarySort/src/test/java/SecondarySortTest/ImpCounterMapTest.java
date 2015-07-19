@@ -1,0 +1,94 @@
+package SecondarySortTest;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
+
+import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
+import org.junit.Before;
+import org.junit.Test;
+
+import ProjectCounter.Compositekeywrite;
+import ProjectCounter.CountryIncomeReducer;
+import ProjectCounter.ImpCounterMap;
+
+public class ImpCounterMapTest {
+
+  MapDriver<Object, Text, Compositekeywrite, NullWritable> mapDriver;
+  ReduceDriver<Compositekeywrite, NullWritable, Compositekeywrite, NullWritable> reduceDriver;
+  MapReduceDriver<Object, Text, Compositekeywrite, NullWritable, Compositekeywrite, NullWritable> mapReduceDriver;
+
+  @Before
+  public void setUp() {
+    ImpCounterMap mapper = new ImpCounterMap();
+    CountryIncomeReducer reducer = new CountryIncomeReducer();
+    mapDriver = MapDriver.newMapDriver(mapper);
+    reduceDriver = ReduceDriver.newReduceDriver(reducer);
+    mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
+  }
+
+  @Test
+  public void testMapper_ValidLine_ValidMap() throws IOException {
+
+    // Arrange
+
+    mapDriver
+        .withInput(
+            new LongWritable(),
+            new Text(
+                " Afghanistan   ,AFG,Adjusted net national income per capita (current US$),NY.ADJ.NNTY.PC.CD,,,,,,,,,,,1.50855789775009E+02,1.53323029993147E+02,1.29938741127974E+02,1.34638308666771E+02,1.62841258802338E+02,1.74029361459106E+02,1.84657885719044E+02,2.10013898514467E+02,2.32910721424455E+02,2.60386697008870E+02,2.49613937173977E+02,2.39907716924562E+02,,,,,,,,,,,,,,,,,,,,1.02143433887964E+02,1.63667032790391E+02,1.76387812398029E+02,1.97829227159392E+02,2.28997715275721E+02,2.48507069374298E+02,3.37218077773925E+02,3.37420503202262E+02,4.06377005590016E+02,5.00880766813369E+02,5.49832839819594E+02,6.18282906047745E+02,5.98572514404039E+02,"));
+    Compositekeywrite k =
+        new Compositekeywrite("Afghanistan", 500.880766813369);
+
+    // mapDriver.withOutputFromString("sf  123");
+    mapDriver.withOutput(k, NullWritable.get());
+
+    // Act and Assert
+    mapDriver.runTest();
+  }
+
+  @Test
+  public void testMapper_InvalidLine_Null() throws IOException {
+    mapDriver.withInput(new LongWritable(), new Text(
+        "Nothing interesting in here!!!"));
+    mapDriver.runTest();
+  }
+}
+
+// @Test
+// public void testReducer_ValidMaps_ValidResult() throws IOException {
+//
+// List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+// double expected = 200.05;
+//
+// values.add(new DoubleWritable(8.4));
+// values.add(new DoubleWritable(1.6));
+// values.add(new DoubleWritable(100));
+// values.add(new DoubleWritable(expected));
+//
+// reduceDriver.withInput(new Text("2000"), values);
+// reduceDriver.withOutput(new Text("2000"), new DoubleWritable(expected));
+//
+// reduceDriver.runTest();
+// }
+//
+// @Test
+// public void testMapReduce() throws IOException {
+// mapReduceDriver.withInput(new LongWritable(), new Text(
+// "  1853   1    8.4     2.7       4    62.8     ---"));
+// List<DoubleWritable> values = new ArrayList<DoubleWritable>();
+// values.add(new DoubleWritable(1));
+// values.add(new DoubleWritable(1));
+// mapReduceDriver.withOutput(new Text("1853"), new DoubleWritable(8.4));
+// mapReduceDriver.runTest();
+// }
+//
+// }
+//
+//
