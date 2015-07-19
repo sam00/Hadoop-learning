@@ -61,34 +61,3 @@ public class ImpCounterMapTest {
   }
 }
 
-// @Test
-// public void testReducer_ValidMaps_ValidResult() throws IOException {
-//
-// List<DoubleWritable> values = new ArrayList<DoubleWritable>();
-// double expected = 200.05;
-//
-// values.add(new DoubleWritable(8.4));
-// values.add(new DoubleWritable(1.6));
-// values.add(new DoubleWritable(100));
-// values.add(new DoubleWritable(expected));
-//
-// reduceDriver.withInput(new Text("2000"), values);
-// reduceDriver.withOutput(new Text("2000"), new DoubleWritable(expected));
-//
-// reduceDriver.runTest();
-// }
-//
-// @Test
-// public void testMapReduce() throws IOException {
-// mapReduceDriver.withInput(new LongWritable(), new Text(
-// "  1853   1    8.4     2.7       4    62.8     ---"));
-// List<DoubleWritable> values = new ArrayList<DoubleWritable>();
-// values.add(new DoubleWritable(1));
-// values.add(new DoubleWritable(1));
-// mapReduceDriver.withOutput(new Text("1853"), new DoubleWritable(8.4));
-// mapReduceDriver.runTest();
-// }
-//
-// }
-//
-//

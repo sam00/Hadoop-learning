@@ -3,7 +3,7 @@ package ProjectCounter;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.Partitioner;
 
-public class BasicPartitioner extends
+public class CountryPartitioner extends
     Partitioner<Compositekeywrite, NullWritable> {
 
   @Override

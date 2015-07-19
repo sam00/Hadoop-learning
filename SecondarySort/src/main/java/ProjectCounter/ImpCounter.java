@@ -62,7 +62,7 @@ public class ImpCounter {
 
     // Setup MapReduce
     job.setMapperClass(ImpCounterMap.class);
-    job.setPartitionerClass(BasicPartitioner.class);
+    job.setPartitionerClass(CountryPartitioner.class);
 
     job.setGroupingComparatorClass(IncomeSortingComparator.class);
     job.setSortComparatorClass(BasicCompKeySort.class);
