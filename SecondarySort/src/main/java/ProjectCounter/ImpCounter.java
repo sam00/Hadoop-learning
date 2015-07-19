@@ -8,9 +8,8 @@ import java.net.URI;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.mapreduce.Counters;
@@ -19,6 +18,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
 
 public class ImpCounter {
 
@@ -32,7 +32,6 @@ public class ImpCounter {
     Configuration conf = new Configuration(true);
 
     // Create job
-
     @SuppressWarnings("deprecation")
     Job job = new Job(conf, "ImpCounter");
     job.setJarByClass(ImpCounter.class);
@@ -47,7 +46,7 @@ public class ImpCounter {
     if (codec == null) {
       System.err.println("No codec found for " + uri);
       System.exit(1);
-}
+    }
     String outputUri =
         CompressionCodecFactory.removeSuffix(uri, codec.getDefaultExtension());
     InputStream in = null;
@@ -59,11 +58,11 @@ public class ImpCounter {
     } finally {
       IOUtils.closeStream(in);
       IOUtils.closeStream(out);
-    }
+}
 
     // Setup MapReduce
     job.setMapperClass(ImpCounterMap.class);
-    job.setNumReduceTasks(1);
+    job.setPartitionerClass(BasicPartitioner.class);
 
     job.setGroupingComparatorClass(BasicGrouping.class);
     job.setSortComparatorClass(BasicCompKeySort.class);
@@ -71,11 +70,11 @@ public class ImpCounter {
     job.setNumReduceTasks(1);
 
     // Specify key / value
-    job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(DoubleWritable.class);
+    job.setOutputKeyClass(Compositekeywrite.class);
+    job.setOutputValueClass(NullWritable.class);
 
     // Input
-
+    // FileInputFormat.addInputPath(job, inputPath);
     FileInputFormat.addInputPaths(job, outputUri);
     job.setInputFormatClass(TextInputFormat.class);
 
@@ -93,6 +92,8 @@ public class ImpCounter {
 
     // Counter finding and displaying
     Counters counters = job.getCounters();
+
+    // Displaying counters
     System.out.printf("Missing Fields: %d, Error Count: %d\n", counters
         .findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).getValue(),
         counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue());

@@ -18,7 +18,7 @@ public class CountryIncomeReducer
 
     long count = context.getCounter(Counter_enum.RECORDS).getValue();
 
-    if (count == 10) {
+    if (count == 30) {
       return; // Displaying only top 10 and lowest 10 countries
     }
 
