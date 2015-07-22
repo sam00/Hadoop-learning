@@ -2,54 +2,55 @@ package LogCounts;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.log4j.Logger;
 
-import ProjectCounter.Compositekeywrite;
-import ProjectCounter.Counter_enum;
+
 
 public class LogCountMap extends Mapper<Object, Text, Text, Text> {
 
-  private final int TitleIndex = 3;
-  private final int ArtistIndex = 2;
-  private final int TrackIdIndex = 0;
-  private final int ExpectedSplitIndex = 4;
-
-  // String seek = "night";
-  String seperator = "<SEP>";
-  String outSeperator = "\t";
-
+  private final int LenghtIndex = 9;
+  private final int StatusIn = 8;
+  
+  private Logger logger = Logger.getLogger("FilterMapper");
+  // String seek = "404, 503, 200";
+  String seperator = " ";
+  
   public void map(Object key, Text line, Context context) throws IOException,
       InterruptedException {
 
-    if (line == null) {
+    if (line == null | line.toString().isEmpty()) {
       return;
     }
 
     String[] splits = line.toString().split(seperator);
+    
+    logger.info("wrong format. ");
 
-    if (splits.length == ExpectedSplitIndex) {
+    if (splits.equals(LenghtIndex)) {
+    String StatusCode = splits[StatusIn];
 
-      // Search for the keyword
-      // Boolean containsSearchword =
-      // splits[TitleIndex].toLowerCase().contains(seek);
+      // if (StatusCode.length() > 3 || StatusCode.length() < 2) {
+      // context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
+      //
+      // return;
 
-      String Trackid = splits[TrackIdIndex];
-      String Artistname = splits[ArtistIndex];
-      String Title = splits[TitleIndex];
 
-      // Map if keyword found
-      // if (containsSearchword
+    if (StatusCode.matches("200")) {
+      context.getCounter(Counter_enum.StatusCode200).increment(1);
 
-      // logger.info("The value of income is in wrong format. ");
-        context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(
-            1);
+    } else if (StatusCode.matches("503")) {
+      context.getCounter(Counter_enum.StatusCode503).increment(1);
+
+    } else if (StatusCode.matches("404")) {
+      context.getCounter(Counter_enum.StatusCode404).increment(1);
+    } else
+            context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
+        
         return;
         }
       }
-    }
+}
  
 

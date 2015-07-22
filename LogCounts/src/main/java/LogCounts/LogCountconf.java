@@ -1,18 +1,11 @@
 package LogCounts;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.compress.CompressionCodec;
-import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.mapreduce.Counters;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -70,10 +63,12 @@ public class LogCountconf {
     System.out.printf("Missing Fields: %d, Error Count: %d\n", counters
         .findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).getValue(),
         counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue());
+    counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue();
+    counters.findCounter(Counter_enum.StatusCode200).getValue();
+    counters.findCounter(Counter_enum.StatusCode503).getValue();
+    counters.findCounter(Counter_enum.StatusCode404).getValue();
 
     System.exit(code);
 
   }
-
 }
-
