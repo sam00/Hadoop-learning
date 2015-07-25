@@ -2,13 +2,14 @@ package LogCounts;
 
 import java.io.IOException;
 
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.log4j.Logger;
 
 
 
-public class LogCountMap extends Mapper<Object, Text, Text, Text> {
+public class LogCountMap extends Mapper<Object, Text, Text, IntWritable> {
 
   private final int LenghtIndex = 9;
   private final int StatusIn = 8;
@@ -31,11 +32,11 @@ public class LogCountMap extends Mapper<Object, Text, Text, Text> {
     if (splits.equals(LenghtIndex)) {
     String StatusCode = splits[StatusIn];
 
-      // if (StatusCode.length() > 3 || StatusCode.length() < 2) {
-      // context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
-      //
-      // return;
-
+       if (StatusCode.length() > 3 || StatusCode.length() < 2) {
+       context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
+      
+       return;
+      }
 
     if (StatusCode.matches("200")) {
       context.getCounter(Counter_enum.StatusCode200).increment(1);
@@ -50,7 +51,7 @@ public class LogCountMap extends Mapper<Object, Text, Text, Text> {
         
         return;
         }
-      }
+  }
 }
  
 

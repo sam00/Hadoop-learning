@@ -1,18 +1,18 @@
 package LogCounts;
 
 import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counters;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-
+import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 import LogCounts.Counter_enum;
 
 public class LogCountconf {
@@ -33,12 +33,12 @@ public class LogCountconf {
 
     // Setup MapReduce
     job.setMapperClass(LogCountMap.class);
-    job.setReducerClass(LogCountReduce.class);
+    // job.setReducerClass(LogCountReduce.class);
     job.setNumReduceTasks(1);
 
     // Specify key / value
     job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(DoubleWritable.class);
+    job.setOutputValueClass(NullWritable.class);
 
     // Input
     FileInputFormat.addInputPath(job, inputPath);
@@ -46,7 +46,7 @@ public class LogCountconf {
 
     // Output
     FileOutputFormat.setOutputPath(job, outputDir);
-    job.setOutputFormatClass(TextOutputFormat.class);
+    job.setOutputFormatClass(NullOutputFormat.class);
 
     // Delete output if exists
     FileSystem hdfs = FileSystem.get(conf);
@@ -62,11 +62,10 @@ public class LogCountconf {
     // Displaying counters
     System.out.printf("Missing Fields: %d, Error Count: %d\n", counters
         .findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).getValue(),
-        counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue());
-    counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue();
-    counters.findCounter(Counter_enum.StatusCode200).getValue();
-    counters.findCounter(Counter_enum.StatusCode503).getValue();
-    counters.findCounter(Counter_enum.StatusCode404).getValue();
+        counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue(), counters
+            .findCounter(Counter_enum.StatusCode200).getValue(), counters
+            .findCounter(Counter_enum.StatusCode503).getValue(), counters
+            .findCounter(Counter_enum.StatusCode404).getValue());
 
     System.exit(code);
 
