@@ -12,7 +12,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
@@ -23,7 +23,7 @@ import com.maxmind.geoip2.record.Country;
 public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
 
-  private Logger logger = Logger.getLogger("Filter");
+  // private Logger logger = Logger.getLogger("Filter");
 
   Path[] Distribute = new Path[0];
 
@@ -56,7 +56,7 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
       InterruptedException {
 
     if (line == null | !!line.toString().isEmpty()) {
-      logger.info("null");
+      // logger.info("null");
       context.getCounter(Counter_enum.NULL_OR_EMPTY).increment(1);
       return;
     }
@@ -98,8 +98,8 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
       }
 
 
-      logger.info(result.getCity() + ", " + countryName.getName() + ", "
-          + countryName.getIsoCode());
+      // logger.info(result.getCity() + ", " + countryName.getName() + ", "
+      // + countryName.getIsoCode());
       IntWritable alpha = new IntWritable(1);
 
       context.write(new Text(count), alpha);
