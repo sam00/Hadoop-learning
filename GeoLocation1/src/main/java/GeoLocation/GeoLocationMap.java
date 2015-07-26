@@ -23,7 +23,7 @@ import com.maxmind.geoip2.record.Country;
 public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
 
-  private Logger logger = Logger.getLogger("FilterMapper");
+  private Logger logger = Logger.getLogger("Filter");
 
   Path[] Distribute = new Path[0];
 
