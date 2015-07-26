@@ -40,7 +40,7 @@ public class GeoLocationconf {
     Job job = new Job(conf, "CountryIncomeConf2");
     job.setJarByClass(GeoLocationconf.class);
 
-    // Decompressing .gz file Ex. foo.csv.gz to foo.csv
+    // Decompressing .gz file
 
     String uri = args[0];
     FileSystem fs = FileSystem.get(URI.create(uri), conf);
