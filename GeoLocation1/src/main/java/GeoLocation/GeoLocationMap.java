@@ -25,7 +25,7 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
   private Logger logger = Logger.getLogger("FilterMapper");
 
-  Path[] Split = new Path[0];
+  Path[] Distribute = new Path[0];
 
   private final int length = 4;
   private final int Ipadd = 3;
@@ -41,9 +41,9 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
     try {
 
-      Split = DistributedCache.getLocalCacheFiles(conf);
+      Distribute = DistributedCache.getLocalCacheFiles(conf);
 
-      File dataset = new File(Split[0].toString()); //
+      File dataset = new File(Distribute[0].toString()); //
 
       Fileread = new DatabaseReader.Builder(dataset).build();
 
