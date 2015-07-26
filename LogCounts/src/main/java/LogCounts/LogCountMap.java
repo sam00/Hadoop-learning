@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 
 public class LogCountMap extends Mapper<Object, Text, Text, IntWritable> {
 
-  private final int LenghtIndex = 9;
-  private final int StatusIn = 8;
+  private final int LenghtIndex = 12;
+  private final int StatusIn = 7;
   
   private Logger logger = Logger.getLogger("FilterMapper");
   // String seek = "404, 503, 200";
@@ -32,10 +32,11 @@ public class LogCountMap extends Mapper<Object, Text, Text, IntWritable> {
     if (splits.equals(LenghtIndex)) {
     String StatusCode = splits[StatusIn];
 
-       if (StatusCode.length() > 3 || StatusCode.length() < 2) {
-       context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
-      
-       return;
+      if (StatusCode.length() > 3 || StatusCode.length() < 2) {
+        context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(
+            1);
+
+        return;
       }
 
     if (StatusCode.matches("200")) {

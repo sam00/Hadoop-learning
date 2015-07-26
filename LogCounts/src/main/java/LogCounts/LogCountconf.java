@@ -60,7 +60,10 @@ public class LogCountconf {
     Counters counters = job.getCounters();
 
     // Displaying counters
-    System.out.printf("Missing Fields: %d, Error Count: %d\n", counters
+    System.out
+        .printf(
+            "Missing Fields: %d, Error Count: %d Status Code 200: %d, Status Code 503: %d,Status Code 404: %d\n",
+            counters
         .findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).getValue(),
         counters.findCounter(Counter_enum.NULL_OR_EMPTY).getValue(), counters
             .findCounter(Counter_enum.StatusCode200).getValue(), counters
