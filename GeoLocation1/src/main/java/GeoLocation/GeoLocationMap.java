@@ -32,7 +32,6 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
   String sep = "\t";
   DatabaseReader Fileread;
 
-  @SuppressWarnings("deprecation")
   @Override
   public void setup(Context context)
 
@@ -57,7 +56,7 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
       InterruptedException {
 
     if (line == null | !!line.toString().isEmpty()) {
-      logger.info("null found.");
+      logger.info("null");
       context.getCounter(Counter_enum.NULL_OR_EMPTY).increment(1);
       return;
     }
@@ -73,33 +72,34 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
         url = "http://" + url;
       }
       URL Url = new URL(url);
-      String host = Url.getHost();
+      String HostUrl = Url.getHost();
 
       InetAddress address = null;
       try {
-        address = InetAddress.getByName(host);
+        address = InetAddress.getByName(HostUrl);
       } catch (UnknownHostException e) {
         return;
       }
 
-      InetAddress ipAddress = InetAddress.getByName(address.getHostAddress());
+      InetAddress Address = InetAddress.getByName(address.getHostAddress());
       CityResponse result = null;
       try {
-        result = Fileread.city(ipAddress);
+        result = Fileread.city(Address);
       } catch (GeoIp2Exception ex) {
         ex.printStackTrace();
         return;
       }
 
-      Country country = result.getCountry();
-      String count = country.getName();
+      Country countryName = result.getCountry();
+      String count = countryName.getName();
 
-      if (country.getName() == null) {
+      if (countryName.getName() == null) {
         return;
       }
 
-      logger.info(result.getCity() + ", " + country.getName() + ", "
-          + country.getIsoCode());
+
+      logger.info(result.getCity() + ", " + countryName.getName() + ", "
+          + countryName.getIsoCode());
       IntWritable alpha = new IntWritable(1);
 
       context.write(new Text(count), alpha);

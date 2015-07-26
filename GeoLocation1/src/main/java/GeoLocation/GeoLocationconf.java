@@ -1,5 +1,6 @@
 package GeoLocation;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,25 +20,27 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import GeoLocation.Counter_enum;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+
+@SuppressWarnings("deprecation")
 public class GeoLocationconf {
 
-  @SuppressWarnings("deprecation")
   public static void main(String[] args) throws IOException,
       InterruptedException, ClassNotFoundException {
 
     Path inputPath = new Path(args[0]);
-    Path inputPath1 = new Path(args[1]);
+    Path inputPathNew = new Path(args[1]);
     Path outputDir = new Path(args[2]);
 
     // Create configuration
     Configuration conf = new Configuration(true);
 
     // Create job
-    @SuppressWarnings("deprecation")
-    Job job = new Job(conf, "GeoLocationconf");
+    Job job = new Job(conf, "CountryIncomeConf2");
     job.setJarByClass(GeoLocationconf.class);
+
+    // Decompressing .gz file Ex. foo.csv.gz to foo.csv
 
     String uri = args[0];
     FileSystem fs = FileSystem.get(URI.create(uri), conf);
@@ -60,7 +63,7 @@ public class GeoLocationconf {
       IOUtils.closeStream(in);
       IOUtils.closeStream(out);
     }
-    DistributedCache.addCacheFile(inputPath1.toUri(), job.getConfiguration());
+    DistributedCache.addCacheFile(inputPathNew.toUri(), job.getConfiguration());
 
     // Setup MapReduce
     job.setMapperClass(GeoLocationMap.class);
@@ -72,12 +75,12 @@ public class GeoLocationconf {
     job.setOutputValueClass(IntWritable.class);
 
     // Input
-    FileInputFormat.addInputPath(job, inputPath);
+    FileInputFormat.addInputPaths(job, outputUri);
     job.setInputFormatClass(TextInputFormat.class);
 
     // Output
     FileOutputFormat.setOutputPath(job, outputDir);
-    job.setInputFormatClass(TextInputFormat.class);
+    job.setOutputFormatClass(TextOutputFormat.class);
 
     // Delete output if exists
     FileSystem hdfs = FileSystem.get(conf);
@@ -92,8 +95,7 @@ public class GeoLocationconf {
 
     // Displaying counters
     System.out
-        .printf(
-"Missing Fields: %d, Error Count: %d\n",
+.printf("Missing Fields: %d, Error Count: %d\n",
             counters.findCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT)
                 .getValue(), counters.findCounter(Counter_enum.NULL_OR_EMPTY)
                 .getValue());
