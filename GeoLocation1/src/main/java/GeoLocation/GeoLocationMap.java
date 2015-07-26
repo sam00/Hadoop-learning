@@ -25,12 +25,12 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
   private Logger logger = Logger.getLogger("FilterMapper");
 
-  Path[] cachefiles = new Path[0];
+  Path[] Split = new Path[0];
 
   private final int length = 4;
   private final int Ipadd = 3;
-  String seperator = "\t";
-  DatabaseReader reader;
+  String sep = "\t";
+  DatabaseReader Fileread;
 
   @SuppressWarnings("deprecation")
   @Override
@@ -41,11 +41,11 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
     try {
 
-      cachefiles = DistributedCache.getLocalCacheFiles(conf);
+      Split = DistributedCache.getLocalCacheFiles(conf);
 
-      File record = new File(cachefiles[0].toString()); //
+      File dataset = new File(Split[0].toString()); //
 
-      reader = new DatabaseReader.Builder(record).build();
+      Fileread = new DatabaseReader.Builder(dataset).build();
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -64,7 +64,7 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
     // Splitting the record with a space and removing eveything except
 
-    String[] Splits = line.toString().toLowerCase().split(seperator);
+    String[] Splits = line.toString().toLowerCase().split(sep);
 
     if (Splits.length == length) {
 
@@ -83,22 +83,22 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
       }
 
       InetAddress ipAddress = InetAddress.getByName(address.getHostAddress());
-      CityResponse response = null;
+      CityResponse result = null;
       try {
-        response = reader.city(ipAddress);
+        result = Fileread.city(ipAddress);
       } catch (GeoIp2Exception ex) {
         ex.printStackTrace();
         return;
       }
 
-      Country country = response.getCountry();
+      Country country = result.getCountry();
       String count = country.getName();
 
       if (country.getName() == null) {
         return;
       }
 
-      logger.info(response.getCity() + ", " + country.getName() + ", "
+      logger.info(result.getCity() + ", " + country.getName() + ", "
           + country.getIsoCode());
       IntWritable alpha = new IntWritable(1);
 
