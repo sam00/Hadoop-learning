@@ -19,17 +19,16 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.Country;
 
-
 @SuppressWarnings("deprecation")
 public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
-  // Path cachefiles = new Path(args[1]);
+
   private Logger logger = Logger.getLogger("FilterMapper");
 
   Path[] cachefiles = new Path[0];
 
-  private final int lenIndex = 4;
-  private final int IpIndex = 3;
+  private final int length = 4;
+  private final int Ipadd = 3;
   String seperator = "\t";
   DatabaseReader reader;
 
@@ -44,9 +43,9 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
       cachefiles = DistributedCache.getLocalCacheFiles(conf);
 
-      File database = new File(cachefiles[0].toString()); //
+      File record = new File(cachefiles[0].toString()); //
 
-      reader = new DatabaseReader.Builder(database).build();
+      reader = new DatabaseReader.Builder(record).build();
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -64,17 +63,17 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
     }
 
     // Splitting the record with a space and removing eveything except
-    // [^0-9a-zA-Z ]
-    String[] recordSplits = line.toString().toLowerCase().split(seperator);
 
-    if (recordSplits.length == lenIndex) {
+    String[] Splits = line.toString().toLowerCase().split(seperator);
 
-      String url = recordSplits[IpIndex];
+    if (Splits.length == length) {
+
+      String url = Splits[Ipadd];
       if (!url.startsWith("http") && !url.startsWith("https")) {
         url = "http://" + url;
       }
-      URL netUrl = new URL(url);
-      String host = netUrl.getHost();
+      URL Url = new URL(url);
+      String host = Url.getHost();
 
       InetAddress address = null;
       try {
@@ -93,7 +92,7 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
       }
 
       Country country = response.getCountry();
-      String count = country.getName(); // 'US'
+      String count = country.getName();
 
       if (country.getName() == null) {
         return;
@@ -101,9 +100,9 @@ public class GeoLocationMap extends Mapper<Object, Text, Text, IntWritable> {
 
       logger.info(response.getCity() + ", " + country.getName() + ", "
           + country.getIsoCode());
-      IntWritable ONE = new IntWritable(1);
+      IntWritable alpha = new IntWritable(1);
 
-      context.write(new Text(count), ONE);
+      context.write(new Text(count), alpha);
 
     } else
       context.getCounter(Counter_enum.MISSING_FIELDS_RECORD_COUNT).increment(1);
